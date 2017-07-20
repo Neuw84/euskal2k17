@@ -1,0 +1,527 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md\nWe need to put the Spark twitter dependency on the Spark interpreter config along with the Cassandra one, then get Twitter crendentials at https://apps.twitter.com\n\n### Dependencies for the spark interpreter \n\n```org.apache.bahir:spark-streaming-twitter_2.11:2.1.0```\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 7:55:00 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eWe need to put the Spark twitter dependency on the Spark interpreter config along with the Cassandra one, then get Twitter crendentials at \u003ca href\u003d\"https://apps.twitter.com\"\u003ehttps://apps.twitter.com\u003c/a\u003e\u003c/p\u003e\n\u003ch3\u003eDependencies for the spark interpreter\u003c/h3\u003e\n\u003cp\u003e\u003ccode\u003eorg.apache.bahir:spark-streaming-twitter_2.11:2.1.0\u003c/code\u003e\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1496818741424_-2053726313",
+      "id": "20170607-065901_1274790031",
+      "dateCreated": "Jun 7, 2017 6:59:01 AM",
+      "dateStarted": "Jul 20, 2017 7:55:00 AM",
+      "dateFinished": "Jul 20, 2017 7:55:00 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.streaming.twitter._\nimport org.apache.spark.streaming._\nimport org.apache.spark.storage.StorageLevel\nimport scala.io.Source\nimport scala.collection.mutable.HashMap\nimport java.io.File\nimport org.apache.log4j.Logger\nimport org.apache.log4j.Level\nimport sys.process.stringSeqToProcess\nimport org.apache.spark.SparkConf\n\n\n// ********************************* Configures the Oauth Credentials for accessing Twitter ****************************\n\ndef configureTwitterCredentials(apiKey: String, apiSecret: String, accessToken: String, accessTokenSecret: String) {\n      val configs \u003d new HashMap[String, String] ++\u003d Seq(\n    \"apiKey\" -\u003e apiKey, \"apiSecret\" -\u003e apiSecret, \"accessToken\" -\u003e accessToken, \"accessTokenSecret\" -\u003e accessTokenSecret)\n  println(\"Configuring Twitter OAuth\")\n  configs.foreach{ case(key, value) \u003d\u003e\n    if (value.trim.isEmpty) {\n      throw new Exception(\"Error setting authentication - value for \" + key + \" not set\")\n    }\n    val fullKey \u003d \"twitter4j.oauth.\" + key.replace(\"api\", \"consumer\")\n    System.setProperty(fullKey, value.trim)\n    println(\"\\tProperty \" + fullKey + \" set as [\" + value.trim + \"]\")\n  }\n  println()\n\n}\n\n// ***************************************** Configure Twitter credentials ********************************************\n\nval apiKey \u003d \"xx\"\nval apiSecret \u003d \"xx\"\nval accessToken \u003d \"xxx\"\nval accessTokenSecret \u003d \"xxx\"\n\n\nconfigureTwitterCredentials(apiKey, apiSecret, accessToken, accessTokenSecret)\n// ***************************************** Start Streaming Context ********************************************\nval ssc \u003d new StreamingContext(sc, Seconds(2))\nval stream \u003d TwitterUtils.createStream(ssc, None)\n\n\n\n    val hashTags \u003d stream.flatMap(status \u003d\u003e status.getText.split(\" \").filter(_.startsWith(\"#\")))\n\n    hashTags.map((_, 1)).reduceByKeyAndWindow(_ + _, Seconds(60))\n                     .map{case (topic, count) \u003d\u003e (count, topic)}\n                     .transform(_.sortByKey(false))\n                     .foreachRDD(rdd\u003d\u003e rdd.toDF().registerTempTable(\"count_60\"))\n\n\n\n    ssc.start()\n\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:34:29 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nimport org.apache.spark.streaming.twitter._\n\nimport org.apache.spark.streaming._\n\nimport org.apache.spark.storage.StorageLevel\n\nimport scala.io.Source\n\nimport scala.collection.mutable.HashMap\n\nimport java.io.File\n\nimport org.apache.log4j.Logger\n\nimport org.apache.log4j.Level\n\nimport sys.process.stringSeqToProcess\n\nimport org.apache.spark.SparkConf\n\nconfigureTwitterCredentials: (apiKey: String, apiSecret: String, accessToken: String, accessTokenSecret: String)Unit\n\napiKey: String \u003d pde7CoNrXUTFU3Imtyefjyplv\n\napiSecret: String \u003d rNtgO4eLu09jc2AwnQ8DyNwamfFkz7FESzPMt5u380ewjekdlU\n\naccessToken: String \u003d 161592987-9roYE6xhxf7f0Iu9UsNgCnEejf5CejB1CaS7zilH\n\naccessTokenSecret: String \u003d 5kg0X5YfjY4cBB0fjUgnbFU5p1wbokqfxTnk3MYQsS58N\nConfiguring Twitter OAuth\n\tProperty twitter4j.oauth.consumerKey set as [pde7CoNrXUTFU3Imtyefjyplv]\n\tProperty twitter4j.oauth.accessToken set as [161592987-9roYE6xhxf7f0Iu9UsNgCnEejf5CejB1CaS7zilH]\n\tProperty twitter4j.oauth.consumerSecret set as [rNtgO4eLu09jc2AwnQ8DyNwamfFkz7FESzPMt5u380ewjekdlU]\n\tProperty twitter4j.oauth.accessTokenSecret set as [5kg0X5YfjY4cBB0fjUgnbFU5p1wbokqfxTnk3MYQsS58N]\n\n\nssc: org.apache.spark.streaming.StreamingContext \u003d org.apache.spark.streaming.StreamingContext@5431b9a4\n\nstream: org.apache.spark.streaming.dstream.ReceiverInputDStream[twitter4j.Status] \u003d org.apache.spark.streaming.twitter.TwitterInputDStream@2219d0b0\n\nhashTags: org.apache.spark.streaming.dstream.DStream[String] \u003d org.apache.spark.streaming.dstream.FlatMappedDStream@48a7400a\n\nwarning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1496818602509_1818619770",
+      "id": "20170607-065642_348799366",
+      "dateCreated": "Jun 7, 2017 6:56:42 AM",
+      "dateStarted": "Jul 20, 2017 10:10:15 AM",
+      "dateFinished": "Jul 20, 2017 10:10:25 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql select _2 as topic, _1 as count from  count_60 limit 5",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:13:03 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "multiBarChart",
+              "height": 300.0,
+              "optionOpen": false,
+              "setting": {
+                "multiBarChart": {
+                  "stacked": false
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "topic",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "count",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "topic\tcount\n#escortizmir\t15\n#izmirescort\t15\n#EXO\t12\n#metrominiTV\t10\n#엑소\t5\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1496820953823_-791376683",
+      "id": "20170607-073553_151682203",
+      "dateCreated": "Jun 7, 2017 7:35:53 AM",
+      "dateStarted": "Jul 20, 2017 10:12:51 AM",
+      "dateFinished": "Jul 20, 2017 10:12:51 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nssc.stop(stopSparkContext \u003d false, stopGracefully \u003d true)",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:13:08 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1496819021324_1813398562",
+      "id": "20170607-070341_1784149830",
+      "dateCreated": "Jun 7, 2017 7:03:41 AM",
+      "dateStarted": "Jul 20, 2017 10:13:08 AM",
+      "dateFinished": "Jul 20, 2017 10:13:14 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n\nimport org.apache.spark.streaming.twitter._\nval ssc \u003d new StreamingContext(sc, Seconds(2))\nval tweets \u003d TwitterUtils.createStream(ssc, None, Array(\"#EEspotlight\", \"#EE25\", \"#spark\", \"#GoE25\"))\n\nval twt \u003d tweets.window(Seconds(600))\n\ncase class Tweet(createdAt:Long, text:String, screenName:String)\ntwt.map(status\u003d\u003e\n  Tweet(status.getCreatedAt().getTime()/1000, status.getText(), status.getUser().getScreenName())\n).foreachRDD(rdd\u003d\u003e\n  rdd.toDF().registerTempTable(\"tweets\")\n)\n\n//twt.print\n\nssc.start()\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:13:17 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nimport org.apache.spark.streaming.twitter._\n\nssc: org.apache.spark.streaming.StreamingContext \u003d org.apache.spark.streaming.StreamingContext@1da1086a\n\ntweets: org.apache.spark.streaming.dstream.ReceiverInputDStream[twitter4j.Status] \u003d org.apache.spark.streaming.twitter.TwitterInputDStream@74298921\n\ntwt: org.apache.spark.streaming.dstream.DStream[twitter4j.Status] \u003d org.apache.spark.streaming.dstream.WindowedDStream@31bf8220\n\ndefined class Tweet\n\nwarning: there was one deprecation warning; re-run with -deprecation for details\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1496999253350_-1393556672",
+      "id": "20170609-090733_905819318",
+      "dateCreated": "Jun 9, 2017 9:07:33 AM",
+      "dateStarted": "Jul 20, 2017 10:13:17 AM",
+      "dateFinished": "Jul 20, 2017 10:13:21 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n-- checking window contents\n\nselect from_unixtime(createdAt), count(1) from tweets group by createdAt order by createdAt",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:15:54 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "from_unixtime(createdAt, yyyy-MM-dd HH:mm:ss)\tcount(1)\n2017-07-20 10:14:32\t1\n2017-07-20 10:14:33\t1\n2017-07-20 10:15:39\t1\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497000944479_-138501947",
+      "id": "20170609-093544_218801639",
+      "dateCreated": "Jun 9, 2017 9:35:44 AM",
+      "dateStarted": "Jul 20, 2017 10:15:54 AM",
+      "dateFinished": "Jul 20, 2017 10:15:56 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n\n/* declaring a function in Scala */\n\ndef sentiment(s:String) : String \u003d {\n    val positive \u003d Array(\"amor\", \"acertado\", \"adecuado\", \"adaptable\", \"ágil\", \"afable\", \"agradable\", \"amable\", \"alegre\", \"apto\", \"atento\", \"bondadoso\", \"bonito\", \"bueno\", \"capaz\", \"caritativo\", \"compasivo\", \"coherente\", \"competente\", \"constante\", \"cordial\", \"contento\", \"decidido\", \"diligente\", \"discreto\", \"dialogante\", \"detallista\", \"educado\", \"eficaz\", \"eficiente\", \"emprendedor\", \"encantador\", \"estupendo\", \"excepcional\", \"exigente\", \"experto\", \"extraordinario\", \"fantástico\", \"feliz\", \"fiel\", \"firme\", \"genial\", \"hábil\", \"hablador\", \"hermoso\", \"honrado\", \"ingenioso\", \"independiente\", \"interesante\", \"justo\", \"leal\", \"lógico\", \"maravilloso\", \"meticuloso\", \"metódico\", \"motivador\", \"minucioso\", \"notable\", \"negociador\", \"optimista\", \"ordenado\", \"organizado\", \"orientado\", \"objetivo\", \"paciente\", \"prudente\", \"precavido\", \"persistente\", \"perseverante\", \"pacífico\", \"preparado\", \"prudente\", \"polivalente\", \"positivo\", \"previsor\", \"productivo\", \"puntual\", \"protector\", \"razonable\", \"rápido\", \"recto\", \"respetuoso\", \"responsable\", \"sabio\", \"seguro\", \"tenaz\", \"tolerante\", \"tranquilo\", \"único\", \"válido\", \"valiente\", \"versado\",\"bueno\", \"increible\", \"feliz\")\n    val negative \u003d Array(\"odio\", \"malo\", \"estupido\", \"agresivo\",\t\"despreciable\", \"egoísta\", \"vanidoso\", \"pedante\", \"caprichoso\", \"mentiroso\", \"hipócrita\", \"mierda\", \"aburrido\", \"malo\",\"falso\", \"negativo\", \"falso\")\n\n\n// val negative \u003d Array(\"hate\", \"bad\", \"stupid,\"is\") \t\n// val positive \u003d Array(\"like\", \"love\", \"good\", \"great\", \"happy\", \"cool\", \"the\", \"one\", \"that\")\n    var st \u003d 0;\n\n    val words \u003d s.split(\" \")    \n    positive.foreach(p \u003d\u003e\n        words.foreach(w \u003d\u003e\n            if(p\u003d\u003dw) st \u003d st+1\n        )\n    )\n\n    negative.foreach(p\u003d\u003e\n        words.foreach(w\u003d\u003e\n            if(p\u003d\u003dw) st \u003d st-1\n        )\n    )\n    if(st\u003e0)\n        \"positivie\"\n    else if(st\u003c0)\n        \"negative\"\n    else\n        \"neutral\"\n}\n\nsqlContext.udf.register(\"sentiment\", sentiment _)",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:16:01 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nsentiment: (s: String)String\n\nres55: org.apache.spark.sql.expressions.UserDefinedFunction \u003d UserDefinedFunction(\u003cfunction1\u003e,StringType,Some(List(StringType)))\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497000837128_-886038412",
+      "id": "20170609-093357_8240538",
+      "dateCreated": "Jun 9, 2017 9:33:57 AM",
+      "dateStarted": "Jul 20, 2017 10:16:01 AM",
+      "dateFinished": "Jul 20, 2017 10:16:02 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%pyspark\n\n#declaring a function in Python\n\nimport re\n\ndef wordcount(a):\n  return len(re.split(\"\\W+\",a))\n  \nsqlContext.registerFunction(\"wordcount\", wordcount)\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:16:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1497000985820_-74371474",
+      "id": "20170609-093625_670805031",
+      "dateCreated": "Jun 9, 2017 9:36:25 AM",
+      "dateStarted": "Jul 20, 2017 10:16:05 AM",
+      "dateFinished": "Jul 20, 2017 10:16:06 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\n--using SQL to mix window data, with scala function and python function\n\nselect from_unixtime(createdAt) as created,screenName as user, sentiment(text) as sentiment, wordcount(text) as wordcount,text as tweet from tweets limit 10\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:25:57 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 179.6,
+              "optionOpen": false,
+              "setting": {
+                "multiBarChart": {
+                  "stacked": false
+                }
+              },
+              "commonSetting": {},
+              "keys": [
+                {
+                  "name": "created",
+                  "index": 0.0,
+                  "aggr": "sum"
+                }
+              ],
+              "groups": [],
+              "values": [
+                {
+                  "name": "screenName",
+                  "index": 1.0,
+                  "aggr": "sum"
+                }
+              ]
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "created\tuser\tsentiment\twordcount\ttweet\n2017-07-20 10:18:59\tMahtarus\tneutral\t17\tPour le moment c\u0027est en exclusivité aux US. En tout cas bien pensé. #amazon #spark #sociamedia\n2017-07-20 10:20:04\tBloombergTVBG\tneutral\t18\tПотребителите на #Spark могат да отбелязват продукти на публикациите, което улеснява закупуването им. #Amazon https://t.co/hUc90la7ZS\n2017-07-20 10:23:23\tFabienDLT\tneutral\t22\tRT @GarciaPaulinee: #Amazon lance #Spark, un Instagram dédié au shopping pour les clients Prime via @BlogModerateur @fropars https://t.co/t…\n2017-07-20 10:24:34\tNawal_\tneutral\t19\tAmazon lance #Spark, un Instagram dédié au shopping pour les clients #Amazon Prime. \nhttps://t.co/BnisdHN7Ko \nvia @BlogModerateur\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497001002693_2011382962",
+      "id": "20170609-093642_55515975",
+      "dateCreated": "Jun 9, 2017 9:36:42 AM",
+      "dateStarted": "Jul 20, 2017 10:25:57 AM",
+      "dateFinished": "Jul 20, 2017 10:25:58 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\n--ploting sentiment\n\nselect  sentiment(text) as sentiment, count(1) from tweets group by sentiment(text)",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:27:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "sentiment\tcount(1)\nneutral\t4\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497001028081_-1676419922",
+      "id": "20170609-093708_1534300543",
+      "dateCreated": "Jun 9, 2017 9:37:08 AM",
+      "dateStarted": "Jul 20, 2017 10:27:02 AM",
+      "dateFinished": "Jul 20, 2017 10:27:02 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\n--show most common words for positive and negatives tweets\n\nselect word, sentiment, count(1) as cnt\nfrom \n(\n   select from_unixtime(createdAt) as created, screenName, sentiment(text) as sentiment, wordcount(text) as wordcount, text  from tweets\n) sub1\nlateral view explode(split(text, \u0027 \u0027)) t as word \nwhere sentiment \u003c\u003e \u0027neutral\u0027\ngroup by word, sentiment\n--having count(1) \u003e 1\norder by cnt desc limit 1100\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:27:06 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/sql"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "word\tsentiment\tcnt\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497001091386_1249134094",
+      "id": "20170609-093811_1946606537",
+      "dateCreated": "Jun 9, 2017 9:38:11 AM",
+      "dateStarted": "Jul 20, 2017 10:27:06 AM",
+      "dateFinished": "Jul 20, 2017 10:27:07 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nssc.stop(stopSparkContext \u003d false, stopGracefully \u003d true)",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 8:25:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1497001136010_1956515466",
+      "id": "20170609-093856_1696276016",
+      "dateCreated": "Jun 9, 2017 9:38:56 AM",
+      "dateStarted": "Jul 20, 2017 8:25:02 AM",
+      "dateFinished": "Jul 20, 2017 8:25:02 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "user": "anonymous",
+      "dateUpdated": "Jun 9, 2017 9:47:09 AM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1497001629575_-1105623885",
+      "id": "20170609-094709_421552208",
+      "dateCreated": "Jun 9, 2017 9:47:09 AM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Spark Streaming",
+  "id": "2CH5TRFBQ",
+  "angularObjects": {
+    "2CQXW6QV2:shared_process": [],
+    "2CQKU7S3U:shared_process": [],
+    "2CPZFCUMJ:shared_process": [],
+    "2CNKHH414:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

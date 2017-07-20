@@ -1,0 +1,22 @@
+version: '3'
+services:
+  spark:
+    #whether you want to build the docker image comment the "image" line and uncomment "build" line
+    #build: docker
+    image: neuw84/spark-zeppeling:latest
+    ports:
+     - "8080:8080"
+     - "4040:4040"
+    environment:
+     - ZEPPELIN_JAVA_OPTS=-Dcassandra.hosts=cassandra    
+    volumes:
+    - ./data:/usr/zeppelin/data
+    - ./notebooks:/usr/zeppelin/notebook  
+    links: 
+    - cassandra
+    depends_on: 
+    - cassandra
+  cassandra:
+    image: cassandra:2    
+    ports:
+    - "9042:9042"

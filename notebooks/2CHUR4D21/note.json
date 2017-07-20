@@ -1,0 +1,1019 @@
+{
+  "paragraphs": [
+    {
+      "title": "1 - Markdown",
+      "text": "%md \n# Apache Zeppelin + Apache Spark + Apache Cassandra\n\n## Useful links:\n\n* [The Spark Cassandra Connector github repository](https://github.com/datastax/spark-cassandra-connector)\n* [Introduction to CQL](http://docs.datastax.com/en/cql/3.3/cql/cqlIntro.html)\n* [Using CQL](https://docs.datastax.com/en/cql/3.3/cql/cql_using/useAboutCQL.html)\n\n## Requirements:\n\nLoad ```com.datastax.spark:spark-cassandra-connector_2.11:2.0.2``` dependency and add ```spark.cassandra.connection.host\u003dcassandra``` property to the spark interpreter\n\n\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:01:07 AM",
+      "config": {
+        "tableHide": false,
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003ch1\u003eApache Zeppelin + Apache Spark + Apache Cassandra\u003c/h1\u003e\n\u003ch2\u003eUseful links:\u003c/h2\u003e\n\u003cul\u003e\n  \u003cli\u003e\u003ca href\u003d\"https://github.com/datastax/spark-cassandra-connector\"\u003eThe Spark Cassandra Connector github repository\u003c/a\u003e\u003c/li\u003e\n  \u003cli\u003e\u003ca href\u003d\"http://docs.datastax.com/en/cql/3.3/cql/cqlIntro.html\"\u003eIntroduction to CQL\u003c/a\u003e\u003c/li\u003e\n  \u003cli\u003e\u003ca href\u003d\"https://docs.datastax.com/en/cql/3.3/cql/cql_using/useAboutCQL.html\"\u003eUsing CQL\u003c/a\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2\u003eRequirements:\u003c/h2\u003e\n\u003cp\u003eLoad \u003ccode\u003ecom.datastax.spark:spark-cassandra-connector_2.11:2.0.2\u003c/code\u003e dependency and add \u003ccode\u003espark.cassandra.connection.host\u003dcassandra\u003c/code\u003e property to the spark interpreter\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665043_1756657811",
+      "id": "20160113-181412_1813689583",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:01:07 AM",
+      "dateFinished": "Jul 20, 2017 10:01:07 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "2 - Download csv file",
+      "text": "%sh\n\nwget https://raw.githubusercontent.com/victorcouste/zeppelin-spark-cassandra-demo/master/albums.csv\n\n# Or download direclty the demo CSV file from https://raw.githubusercontent.com/victorcouste/zeppelin-spark-cassandra-demo/master/albums.csv",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:01:10 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sh",
+        "editorHide": false,
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "--2017-07-20 10:01:10--  https://raw.githubusercontent.com/victorcouste/zeppelin-spark-cassandra-demo/master/albums.csv\nResolving raw.githubusercontent.com (raw.githubusercontent.com)... 151.101.132.133\nConnecting to raw.githubusercontent.com (raw.githubusercontent.com)|151.101.132.133|:443... connected.\nHTTP request sent, awaiting response... 200 OK\nLength: 6851577 (6.5M) [text/plain]\nSaving to: ‘albums.csv.1’\n\n     0K .......... .......... .......... .......... ..........  0% 1.31M 5s\n    50K .......... .......... .......... .......... ..........  1% 2.49M 4s\n   100K .......... .......... .......... .......... ..........  2% 3.04M 3s\n   150K .......... .......... .......... .......... ..........  2% 2.92M 3s\n   200K .......... .......... .......... .......... ..........  3% 1.91M 3s\n   250K .......... .......... .......... .......... ..........  4% 2.91M 3s\n   300K .......... .......... .......... .......... ..........  5% 3.17M 3s\n   350K .......... .......... .......... .......... ..........  5% 2.80M 3s\n   400K .......... .......... .......... .......... ..........  6% 3.19M 2s\n   450K .......... .......... .......... .......... ..........  7% 3.92M 2s\n   500K .......... .......... .......... .......... ..........  8% 2.68M 2s\n   550K .......... .......... .......... .......... ..........  8% 3.92M 2s\n   600K .......... .......... .......... .......... ..........  9%  266K 4s\n   650K .......... .......... .......... .......... .......... 10% 2.70M 4s\n   700K .......... .......... .......... .......... .......... 11% 2.90M 4s\n   750K .......... .......... .......... .......... .......... 11% 1.02M 4s\n   800K .......... .......... .......... .......... .......... 12% 2.59M 4s\n   850K .......... .......... .......... .......... .......... 13% 3.63M 3s\n   900K .......... .......... .......... .......... .......... 14% 3.73M 3s\n   950K .......... .......... .......... .......... .......... 14% 4.69M 3s\n  1000K .......... .......... .......... .......... .......... 15% 4.28M 3s\n  1050K .......... .......... .......... .......... .......... 16% 4.50M 3s\n  1100K .......... .......... .......... .......... .......... 17% 5.06M 3s\n  1150K .......... .......... .......... .......... .......... 17% 2.19M 3s\n  1200K .......... .......... .......... .......... .......... 18% 2.72M 3s\n  1250K .......... .......... .......... .......... .......... 19% 8.41M 3s\n  1300K .......... .......... .......... .......... .......... 20% 3.10M 3s\n  1350K .......... .......... .......... .......... .......... 20% 4.38M 2s\n  1400K .......... .......... .......... .......... .......... 21% 5.36M 2s\n  1450K .......... .......... .......... .......... .......... 22% 4.97M 2s\n  1500K .......... .......... .......... .......... .......... 23% 4.35M 2s\n  1550K .......... .......... .......... .......... .......... 23% 3.30M 2s\n  1600K .......... .......... .......... .......... .......... 24% 3.48M 2s\n  1650K .......... .......... .......... .......... .......... 25% 4.95M 2s\n  1700K .......... .......... .......... .......... .......... 26% 6.13M 2s\n  1750K .......... .......... .......... .......... .......... 26% 5.40M 2s\n  1800K .......... .......... .......... .......... .......... 27% 4.25M 2s\n  1850K .......... .......... .......... .......... .......... 28% 6.24M 2s\n  1900K .......... .......... .......... .......... .......... 29% 3.92M 2s\n  1950K .......... .......... .......... .......... .......... 29% 3.74M 2s\n  2000K .......... .......... .......... .......... .......... 30% 3.96M 2s\n  2050K .......... .......... .......... .......... .......... 31% 4.55M 2s\n  2100K .......... .......... .......... .......... .......... 32%  722K 2s\n  2150K .......... .......... .......... .......... .......... 32% 16.6M 2s\n  2200K .......... .......... .......... .......... .......... 33% 13.4M 2s\n  2250K .......... .......... .......... .......... .......... 34% 16.7M 2s\n  2300K .......... .......... .......... .......... .......... 35% 1.83M 2s\n  2350K .......... .......... .......... .......... .......... 35%  920K 2s\n  2400K .......... .......... .......... .......... .......... 36% 3.49M 2s\n  2450K .......... .......... .......... .......... .......... 37% 3.97M 2s\n  2500K .......... .......... .......... .......... .......... 38% 4.34M 2s\n  2550K .......... .......... .......... .......... .......... 38% 2.36M 2s\n  2600K .......... .......... .......... .......... .......... 39% 3.90M 2s\n  2650K .......... .......... .......... .......... .......... 40% 3.12M 2s\n  2700K .......... .......... .......... .......... .......... 41% 3.74M 2s\n  2750K .......... .......... .......... .......... .......... 41% 3.22M 2s\n  2800K .......... .......... .......... .......... .......... 42% 5.29M 1s\n  2850K .......... .......... .......... .......... .......... 43% 3.59M 1s\n  2900K .......... .......... .......... .......... .......... 44% 5.19M 1s\n  2950K .......... .......... .......... .......... .......... 44% 1.96M 1s\n  3000K .......... .......... .......... .......... .......... 45% 4.20M 1s\n  3050K .......... .......... .......... .......... .......... 46% 2.23M 1s\n  3100K .......... .......... .......... .......... .......... 47% 4.38M 1s\n  3150K .......... .......... .......... .......... .......... 47% 3.50M 1s\n  3200K .......... .......... .......... .......... .......... 48% 4.99M 1s\n  3250K .......... .......... .......... .......... .......... 49% 1.64M 1s\n  3300K .......... .......... .......... .......... .......... 50% 3.12M 1s\n  3350K .......... .......... .......... .......... .......... 50% 5.57M 1s\n  3400K .......... .......... .......... .......... .......... 51% 2.96M 1s\n  3450K .......... .......... .......... .......... .......... 52% 3.12M 1s\n  3500K .......... .......... .......... .......... .......... 53% 4.42M 1s\n  3550K .......... .......... .......... .......... .......... 53% 4.73M 1s\n  3600K .......... .......... .......... .......... .......... 54% 2.10M 1s\n  3650K .......... .......... .......... .......... .......... 55% 4.00M 1s\n  3700K .......... .......... .......... .......... .......... 56% 3.58M 1s\n  3750K .......... .......... .......... .......... .......... 56% 4.28M 1s\n  3800K .......... .......... .......... .......... .......... 57% 4.82M 1s\n  3850K .......... .......... .......... .......... .......... 58% 3.72M 1s\n  3900K .......... .......... .......... .......... .......... 59% 4.63M 1s\n  3950K .......... .......... .......... .......... .......... 59% 3.31M 1s\n  4000K .......... .......... .......... .......... .......... 60% 1.59M 1s\n  4050K .......... .......... .......... .......... .......... 61% 4.81M 1s\n  4100K .......... .......... .......... .......... .......... 62% 4.47M 1s\n  4150K .......... .......... .......... .......... .......... 62% 2.29M 1s\n  4200K .......... .......... .......... .......... .......... 63% 4.15M 1s\n  4250K .......... .......... .......... .......... .......... 64% 4.59M 1s\n  4300K .......... .......... .......... .......... .......... 65% 1.63M 1s\n  4350K .......... .......... .......... .......... .......... 65% 2.72M 1s\n  4400K .......... .......... .......... .......... .......... 66% 4.12M 1s\n  4450K .......... .......... .......... .......... .......... 67% 3.44M 1s\n  4500K .......... .......... .......... .......... .......... 68% 4.32M 1s\n  4550K .......... .......... .......... .......... .......... 68% 5.20M 1s\n  4600K .......... .......... .......... .......... .......... 69% 5.45M 1s\n  4650K .......... .......... .......... .......... .......... 70% 2.88M 1s\n  4700K .......... .......... .......... .......... .......... 70% 4.32M 1s\n  4750K .......... .......... .......... .......... .......... 71% 3.36M 1s\n  4800K .......... .......... .......... .......... .......... 72% 3.47M 1s\n  4850K .......... .......... .......... .......... .......... 73% 3.96M 1s\n  4900K .......... .......... .......... .......... .......... 73% 9.05M 1s\n  4950K .......... .......... .......... .......... .......... 74% 4.51M 1s\n  5000K .......... .......... .......... .......... .......... 75% 2.99M 1s\n  5050K .......... .......... .......... .......... .......... 76% 2.68M 1s\n  5100K .......... .......... .......... .......... .......... 76% 3.89M 1s\n  5150K .......... .......... .......... .......... .......... 77% 3.79M 1s\n  5200K .......... .......... .......... .......... .......... 78% 5.26M 0s\n  5250K .......... .......... .......... .......... .......... 79% 3.75M 0s\n  5300K .......... .......... .......... .......... .......... 79% 3.64M 0s\n  5350K .......... .......... .......... .......... .......... 80%  735K 0s\n  5400K .......... .......... .......... .......... .......... 81% 18.0M 0s\n  5450K .......... .......... .......... .......... .......... 82% 8.21M 0s\n  5500K .......... .......... .......... .......... .......... 82% 3.21M 0s\n  5550K .......... .......... .......... .......... .......... 83% 1.64M 0s\n  5600K .......... .......... .......... .......... .......... 84% 6.97M 0s\n  5650K .......... .......... .......... .......... .......... 85% 2.37M 0s\n  5700K .......... .......... .......... .......... .......... 85% 3.82M 0s\n  5750K .......... .......... .......... .......... .......... 86% 3.60M 0s\n  5800K .......... .......... .......... .......... .......... 87% 3.83M 0s\n  5850K .......... .......... .......... .......... .......... 88% 4.21M 0s\n  5900K .......... .......... .......... .......... .......... 88% 6.18M 0s\n  5950K .......... .......... .......... .......... .......... 89% 2.94M 0s\n  6000K .......... .......... .......... .......... .......... 90% 3.16M 0s\n  6050K .......... .......... .......... .......... .......... 91% 4.81M 0s\n  6100K .......... .......... .......... .......... .......... 91% 3.05M 0s\n  6150K .......... .......... .......... .......... .......... 92% 7.59M 0s\n  6200K .......... .......... .......... .......... .......... 93% 2.99M 0s\n  6250K .......... .......... .......... .......... .......... 94% 4.25M 0s\n  6300K .......... .......... .......... .......... .......... 94% 4.67M 0s\n  6350K .......... .......... .......... .......... .......... 95%  888K 0s\n  6400K .......... .......... .......... .......... .......... 96% 3.24M 0s\n  6450K .......... .......... .......... .......... .......... 97% 67.4M 0s\n  6500K .......... .......... .......... .......... .......... 97% 2.33M 0s\n  6550K .......... .......... .......... .......... .......... 98% 2.37M 0s\n  6600K .......... .......... .......... .......... .......... 99% 2.08M 0s\n  6650K .......... .......... .......... ..........           100% 7.14M\u003d2.3s\n\n2017-07-20 10:01:14 (2.89 MB/s) - ‘albums.csv.1’ saved [6851577/6851577]\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665045_1754349318",
+      "id": "20160123-165554_1618215392",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:01:10 AM",
+      "dateFinished": "Jul 20, 2017 10:01:14 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "3 - Spark :  load csv file in dataFrame",
+      "text": "%spark\n\n//Display Spark version used\nprintln(\"Spark version:\"+spark.version)\n\nval df_albums \u003d spark.read\n        .format(\"csv\")\n        .option(\"header\", \"true\") //reading the headers\n        .option(\"mode\", \"DROPMALFORMED\")\n        .csv(\"albums.csv\").cache\n\ndf_albums.show",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:02:14 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Spark version:2.1.0\n\ndf_albums: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] \u003d [artist: string, album: string ... 4 more fields]\n+----------+--------------------+----+--------------+-------+--------+\n|    artist|               album|year|       country|quality|  status|\n+----------+--------------------+----+--------------+-------+--------+\n|Ultra Naté|Stranger Than Fic...|2001|           USA| normal|Official|\n|Ultra Naté|                Free|1997|   Netherlands| normal|Official|\n|Ultra Naté|          Is It Love|1992|           USA| normal|Official|\n|Ultra Naté|New Kind of Medicine|1998|United Kingdom| normal|Official|\n|Ultra Naté|                Free|1997|     Australia| normal|Official|\n|Ultra Naté|Free: The Mood II...|1997|       Denmark| normal|Official|\n|Ultra Naté|           Rejoicing|1991|           USA| normal|Official|\n|Ultra Naté|        Found a Cure|1998|United Kingdom| normal|Official|\n|Ultra Naté| Situation: Critical|1998|United Kingdom| normal|Official|\n|Ultra Naté|                Free|1998|  South Africa| normal|Official|\n|Ultra Naté|       Joy / Show Me|1993|           USA| normal|Official|\n|Ultra Naté|           Get It Up|2001|       Germany| normal|Official|\n|Ultra Naté|One Woman\u0027s Insanity|1993|           USA| normal|Official|\n|Ultra Naté|  Situation:Critical|1998|           USA| normal|Official|\n|Ultra Naté|              Desire|2000|       Germany| normal|Official|\n|Ultra Naté|New Kind of Medic...|1998|United Kingdom| normal|Official|\n|Ultra Naté|Blue Notes in the...|1991|           USA| normal|Official|\n|    Object|   The Ethane Asylum|2008|           USA| normal|Official|\n|    Object|  Part-Time Paranoia|2001|       Germany| normal|Official|\n|    Object| The Reflecting Skin|  -1|       Unknown| normal|Official|\n+----------+--------------------+----+--------------+-------+--------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665046_1755503564",
+      "id": "20160113-181412_829518708",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:02:14 AM",
+      "dateFinished": "Jul 20, 2017 10:02:42 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "4 - Spark : Print Schema, Show, Filter, GroupBy dataFrame",
+      "text": "df_albums.printSchema()\ndf_albums.show()\ndf_albums.filter(\"year \u003e 2000\").show()\ndf_albums.groupBy(\"year\").count().show()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:03:46 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "root\n |-- artist: string (nullable \u003d true)\n |-- album: string (nullable \u003d true)\n |-- year: string (nullable \u003d true)\n |-- country: string (nullable \u003d true)\n |-- quality: string (nullable \u003d true)\n |-- status: string (nullable \u003d true)\n\n+----------+--------------------+----+--------------+-------+--------+\n|    artist|               album|year|       country|quality|  status|\n+----------+--------------------+----+--------------+-------+--------+\n|Ultra Naté|Stranger Than Fic...|2001|           USA| normal|Official|\n|Ultra Naté|                Free|1997|   Netherlands| normal|Official|\n|Ultra Naté|          Is It Love|1992|           USA| normal|Official|\n|Ultra Naté|New Kind of Medicine|1998|United Kingdom| normal|Official|\n|Ultra Naté|                Free|1997|     Australia| normal|Official|\n|Ultra Naté|Free: The Mood II...|1997|       Denmark| normal|Official|\n|Ultra Naté|           Rejoicing|1991|           USA| normal|Official|\n|Ultra Naté|        Found a Cure|1998|United Kingdom| normal|Official|\n|Ultra Naté| Situation: Critical|1998|United Kingdom| normal|Official|\n|Ultra Naté|                Free|1998|  South Africa| normal|Official|\n|Ultra Naté|       Joy / Show Me|1993|           USA| normal|Official|\n|Ultra Naté|           Get It Up|2001|       Germany| normal|Official|\n|Ultra Naté|One Woman\u0027s Insanity|1993|           USA| normal|Official|\n|Ultra Naté|  Situation:Critical|1998|           USA| normal|Official|\n|Ultra Naté|              Desire|2000|       Germany| normal|Official|\n|Ultra Naté|New Kind of Medic...|1998|United Kingdom| normal|Official|\n|Ultra Naté|Blue Notes in the...|1991|           USA| normal|Official|\n|    Object|   The Ethane Asylum|2008|           USA| normal|Official|\n|    Object|  Part-Time Paranoia|2001|       Germany| normal|Official|\n|    Object| The Reflecting Skin|  -1|       Unknown| normal|Official|\n+----------+--------------------+----+--------------+-------+--------+\nonly showing top 20 rows\n\n+--------------------+--------------------+----+--------------+-------+--------+\n|              artist|               album|year|       country|quality|  status|\n+--------------------+--------------------+----+--------------+-------+--------+\n|          Ultra Naté|Stranger Than Fic...|2001|           USA| normal|Official|\n|          Ultra Naté|           Get It Up|2001|       Germany| normal|Official|\n|              Object|   The Ethane Asylum|2008|           USA| normal|Official|\n|              Object|  Part-Time Paranoia|2001|       Germany| normal|Official|\n|              Hayden|     In Field \u0026 Town|2008|        Canada| normal|Official|\n|              Hayden|   Elk-Lake Serenade|2004|        Canada| normal|Official|\n|              Hayden|            Us Alone|2013|           USA| normal|Official|\n|              Hayden|Skyscraper Nation...|2001|        Canada| normal|Official|\n|              Hayden|Live at Convocati...|2002|           USA| normal|Official|\n|              Hayden|            Hey Love|2015|        Canada| normal|Official|\n|              Hayden|The Place Where W...|2009|        Canada| normal|Official|\n|Get Cape. Wear Ca...|I-Spy / Call Me I...|2006|United Kingdom| normal|Official|\n|Get Cape. Wear Ca...|Get Cape. Wear Ca...|2005|United Kingdom| normal|Official|\n|Get Cape. Wear Ca...|       Find the Time|2008|United Kingdom| normal|Official|\n|Get Cape. Wear Ca...|   War of the Worlds|2006|United Kingdom| normal|Official|\n|Get Cape. Wear Ca...|Searching for the...|2008|United Kingdom| normal|Official|\n|Get Cape. Wear Ca...|Get Cape. Wear Ca...|2010|United Kingdom| normal|Official|\n|Get Cape. Wear Ca...|    Keep Singing Out|2008|United Kingdom| normal|Official|\n|Get Cape. Wear Ca...|                Maps|2012|United Kingdom| normal|Official|\n|Get Cape. Wear Ca...|The Chronicles of...|2006|United Kingdom| normal|Official|\n+--------------------+--------------------+----+--------------+-------+--------+\nonly showing top 20 rows\n\n+----+-----+\n|year|count|\n+----+-----+\n|1953|   34|\n|1957|  160|\n|1987| 1289|\n|1956|  134|\n|  -1| 5948|\n|1936|   11|\n|2012| 2121|\n| 200|    1|\n|1958|  152|\n|1943|    6|\n|1972|  496|\n|1931|    5|\n|1988| 1328|\n|1938|   11|\n|1926|    9|\n|1911|    1|\n|1918|    6|\n|1932|    2|\n|1977|  599|\n|2014| 1148|\n+----+-----+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665046_1755503564",
+      "id": "20160114-180933_599744065",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:03:46 AM",
+      "dateFinished": "Jul 20, 2017 10:03:54 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "5 - SparkSQL on DataFrame",
+      "text": "df_albums.registerTempTable(\"spark_albums_table\")\n\nsqlContext.sql(\"SELECT * FROM spark_albums_table WHERE country\u003d\u0027Spain\u0027\").show",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:04:52 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\nwarning: there was one deprecation warning; re-run with -deprecation for details\n+--------------------+--------------------+----+-------+-------+--------+\n|              artist|               album|year|country|quality|  status|\n+--------------------+--------------------+----+-------+-------+--------+\n|The Ladybug Trans...|Here Comes the Ra...|2006|  Spain| normal|Official|\n|               Queen|        Now I’m Here|1975|  Spain| normal|Official|\n|     Vladislav Delay|Recovery IDea Par...|2008|  Spain| normal|Official|\n|     Vladislav Delay|Recovery IDea Par...|2008|  Spain| normal|Official|\n|              Hefner| Canciones Huerfanas|1999|  Spain| normal|Official|\n|              Hefner|    The Hefner Heart|1999|  Spain| normal|Official|\n|          Clem Snide|  You Were a Diamond|2002|  Spain| normal|Official|\n|                Reik|        Es mejor así|2013|  Spain| normal|Official|\n|Aerolíneas Federales|  Quiero rock\u0027n\u0027roll|1990|  Spain| normal|Official|\n|Aerolíneas Federales|Mucho whisky y ro...|1989|  Spain| normal|Official|\n|Aerolíneas Federales|              Por ti|1987|  Spain| normal|Official|\n|Aerolíneas Federales|Aerolíneas federales|1986|  Spain| normal|Official|\n|Aerolíneas Federales|  Asesiné a mi novio|1991|  Spain| normal|Official|\n|Aerolíneas Federales|    Te echo de menos|1988|  Spain| normal|Official|\n|Aerolíneas Federales|      Tomando tierra|1988|  Spain| normal|Official|\n|Aerolíneas Federales|Tú al monte yo al...|1988|  Spain| normal|Official|\n|Aerolíneas Federales|      Soy un bollito|1988|  Spain| normal|Official|\n|Aerolíneas Federales|             Hop hop|1987|  Spain| normal|Official|\n|Aerolíneas Federales|  Oh qué pena me das|1987|  Spain| normal|Official|\n|Aerolíneas Federales|       Una o ninguna|1991|  Spain| normal|Official|\n+--------------------+--------------------+----+-------+-------+--------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665046_1755503564",
+      "id": "20160114-002321_1001583714",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:04:53 AM",
+      "dateFinished": "Jul 20, 2017 10:04:54 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "7 - SparkSQL On DataFrame  2",
+      "text": "%sql\nSELECT country,count(*) as nb FROM spark_albums_table group by country",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:04:58 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": false,
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [
+            {
+              "name": "nb",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
+          "groups": [],
+          "scatter": {
+            "yAxis": {
+              "name": "nb",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          }
+        },
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "country\tnb\nSweden\t2323\nPhilippines\t8\nSingapore\t18\nMalaysia\t4\nTurkey\t617\nGermany\t9801\nJordan\t1\nFrance\t3462\nGreece\t132\nTaiwan\t159\nSlovakia\t71\nReunion\t1\nArgentina\t525\nBelgium\t763\nEcuador\t4\nFinland\t1970\nPeru\t15\nBenin\t1\nIndia\t87\nChina\t47\nBelarus\t1\nMalta\t1\nChile\t151\nPuerto Rico\t18\nCroatia\t51\nBolivia\t1\nNigeria\t2\nVirgin Islands\t6\nAndorra\t3\nGabon\t1\nUnknown\t14740\nItaly\t1637\nLithuania\t49\nNorway\t898\nSpain\t1352\nCuba\t10\nDenmark\t346\nBarbados\t3\nRussian Federation\t751\nIreland\t109\nLiechtenstein\t2\nThailand\t5\nMonaco\t1\nHong Kong\t59\nUkraine\t49\nVenezuela\t22\nIsrael\t94\nIceland\t66\nSaint-Barthelemy\t1\nUSA\t36217\nSouth Korea\t101\nCyprus\t1\nUruguay\t22\nMexico\t266\nAruba\t1\nEstonia\t207\nIndonesia\t5\nGuatemala\t2\nArmenia\t3\nSyria\t1\nTrinidad and Tobago\t1\nSaudi Arabia\t2\nSwitzerland\t209\nEthiopia\t1\nJamaica\t234\nLatvia\t42\nUnited Arab Emirates\t6\nCanada\t1813\nFaroe Islands\t4\nCzech Republic\t190\nBrazil\t889\nLebanon\t13\nSlovenia\t46\nDominican Republic\t1\nJapan\t6042\nLuxembourg\t10\nNew Zealand\t160\nUnited States Minor Outlying Islands\t4\nBosnia and Herzegovina\t6\nPoland\t1122\nPortugal\t217\nAustralia\t1556\nRomania\t97\nBulgaria\t34\nAustria\t318\nCosta Rica\t2\nEgypt\t6\nSerbia\t17\nSouth Africa\t48\nColombia\t32\nHungary\t55\nPakistan\t1\nUnited Kingdom\t20986\nMoldova\t2\nNetherlands\t1405\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665047_1755118816",
+      "id": "20160114-002054_842505952",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:04:58 AM",
+      "dateFinished": "Jul 20, 2017 10:05:02 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "8 - Cassandra CQL : Create keyspace, help and describe keyspaces",
+      "text": "%cassandra\n\nCREATE KEYSPACE IF NOT EXISTS ks_music \nWITH replication \u003d {\n\t\u0027class\u0027 : \u0027SimpleStrategy\u0027,\n\t\u0027replication_factor\u0027 : 1\n};\n\n//help;\n\n//describe keyspaces;\n\n//describe keyspace ks_music;",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:05:05 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false,
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\n\n\u003cdiv class\u003d\"container\"\u003e\n\u003cdiv class\u003d\"row text-center\"\u003e\n\u003ch4\u003eNo Result\u003c/h4\u003e\n\u003c/div\u003e\n\u003cbr/\u003e\n    \u003cdiv class\u003d\"row\"\u003e\n    \u003cdiv class\u003d\"col-md-3\"\u003e\u003c/div\u003e\n    \u003cdiv class\u003d\"col-md-6 col-offset-md-3 table-responsive table-bordered\"\u003e\n        \u003ctable class\u003d\"table\"\u003e\n            \u003ccaption\u003e\u003ch5\u003eLast query execution info\u003c/h5\u003e\u003c/caption\u003e\n            \u003cthead\u003e\n                \u003ctr\u003e\n                    \u003cth\u003eInfo\u003c/th\u003e\n                    \u003cth\u003eValue\u003c/th\u003e\n                \u003c/tr\u003e\n            \u003c/thead\u003e\n            \u003ctbody\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eStatement\u003c/td\u003e\n                    \u003ctd\u003eCREATE KEYSPACE IF NOT EXISTS ks_music \nWITH replication \u003d {\n\t\u0027class\u0027 : \u0027SimpleStrategy\u0027,\n\t\u0027replication_factor\u0027 : 1\n};\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eAchieved Consistency\u003c/td\u003e\n                    \u003ctd\u003eN/A\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eTried Hosts\u003c/td\u003e\n                    \u003ctd\u003ecassandra172.19.0.2:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eQueried Hosts\u003c/td\u003e\n                    \u003ctd\u003ecassandra172.19.0.2:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eSchema In Agreement\u003c/td\u003e\n                    \u003ctd\u003etrue\u003c/td\u003e\n                \u003c/tr\u003e\n            \u003c/tbody\u003e\n        \u003c/table\u003e\n    \u003c/div\u003e\n    \u003c/div\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665047_1755118816",
+      "id": "20160119-181849_56311459",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:05:06 AM",
+      "dateFinished": "Jul 20, 2017 10:05:14 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "9 - Cassandra CQL : Tables creation",
+      "text": "%cassandra\n\nuse ks_music;\n\nDROP TABLE IF EXISTS albums;\n\nCREATE TABLE IF NOT EXISTS albums ( \n\tartist text,\n\talbum text,\n\tyear text,\n\tcountry text,\n\tquality text,\n\tstatus text,\n\tPRIMARY KEY (album) \n);\n\nDROP TABLE IF EXISTS nbalbums_by_year;\n\nCREATE TABLE IF NOT EXISTS nbalbums_by_year ( \n\tyear text,\n    nbalbums int,\n\tPRIMARY KEY (year)\n);\n\ndescribe table albums;",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:05:17 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false,
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\n\n\u003cbr/\u003e\n\u003cbr/\u003e\n\u003cnav class\u003d\"navbar navbar-default\"\u003e\n    \u003cul class\u003d\"nav navbar-nav\"\u003e\n        \n        \u003cli\u003e\n            \u003ca\u003e\u003cstrong\u003eDESCRIBE TABLE albums;\u003c/strong\u003e\u003c/a\u003e\n        \u003c/li\u003e\n    \u003c/ul\u003e\n    \u003cul class\u003d\"nav navbar-nav navbar-right\"\u003e\n        \u003cli class\u003d\"dropdown\"\u003e\n            \u003ca class\u003d\"dropdown-toggle\" data-toggle\u003d\"dropdown\" role\u003d\"button\" aria-haspopup\u003d\"true\" aria-expanded\u003d\"false\"\u003e\n                \u003cstrong\u003eLegend\u003c/strong\u003e\n                \u003cspan class\u003d\"caret\"\u003e\u003c/span\u003e\n            \u003c/a\u003e\n            \u003cul class\u003d\"dropdown-menu\"\u003e\n                \u003cli\u003e\n                    \u003ca role\u003d\"button\"\u003e\n                        \u003ci class\u003d\"glyphicon glyphicon-dashboard text-muted\" /\u003e\u0026nbsp;Cluster\n                    \u003c/a\u003e\n                \u003c/li\u003e\n                \u003cli\u003e\n                    \u003ca role\u003d\"button\"\u003e\n                        \u003ci class\u003d\"glyphicon glyphicon-folder-open text-danger\" /\u003e\u0026nbsp;\u0026nbsp;Keyspace\n                    \u003c/a\u003e\n                \u003c/li\u003e\n                \u003cli\u003e\n                    \u003ca role\u003d\"button\"\u003e\n                        \u003ci class\u003d\"glyphicon glyphicon-copyright-mark text-warning\" /\u003e\u0026nbsp;\u0026nbsp;UDT\n                    \u003c/a\u003e\n                \u003c/li\u003e\n                \u003cli\u003e\n                    \u003ca role\u003d\"button\"\u003e\n                        \u003ci class\u003d\"glyphicon glyphicon-th-list text-primary\" /\u003e\u0026nbsp;\u0026nbsp;Table\n                    \u003c/a\u003e\n                \u003c/li\u003e\n                \u003cli\u003e\n                    \u003ca role\u003d\"button\"\u003e\n                        \u003ci class\u003d\"glyphicon glyphicon-eye-open text-primary\" /\u003e\u0026nbsp;\u0026nbsp;Materialized View\n                    \u003c/a\u003e\n                \u003c/li\u003e\n                \u003cli\u003e\n                    \u003ca role\u003d\"button\"\u003e\n                        \u003ci class\u003d\"glyphicon glyphicon-random text-success\" /\u003e\u0026nbsp;\u0026nbsp;Function\n                    \u003c/a\u003e\n                \u003c/li\u003e\n                \u003cli\u003e\n                    \u003ca role\u003d\"button\"\u003e\n                        \u003ci class\u003d\"glyphicon glyphicon-retweet text-success\" /\u003e\u0026nbsp;\u0026nbsp;Aggregate\n                    \u003c/a\u003e\n                \u003c/li\u003e\n                \u003cli role\u003d\"separator\" class\u003d\"divider text-muted\"\u003e\u003c/li\u003e\n                \u003cli class\u003d\"dropdown-header\"\u003e\u003cspan class\u003d\"text-primary\"\u003eTable icons\u003c/span\u003e\u003c/li\u003e\n                \u003cli class\u003d\"bg-info\"\u003e\n                    \u003ca role\u003d\"button\"\u003e\n                        \u003ci class\u003d\"glyphicon glyphicon-fullscreen\" /\u003e\u0026nbsp;\u0026nbsp;Partition Key\n                    \u003c/a\u003e\n                \u003c/li\u003e\n                \u003cli class\u003d\"bg-warning\"\u003e\n                    \u003ca role\u003d\"button\"\u003e\n                        \u003ci class\u003d\"glyphicon glyphicon-pushpin\" /\u003e\u0026nbsp;\u0026nbsp;Static Column\n                    \u003c/a\u003e\n                \u003c/li\u003e\n                \u003cli class\u003d\"bg-success\"\u003e\n                    \u003ca role\u003d\"button\"\u003e\n                        \u003ci class\u003d\"glyphicon glyphicon-sort\" /\u003e\u0026nbsp;\u0026nbsp;Clustering Column\n                    \u003c/a\u003e\n                \u003c/li\u003e\n                \u003cli class\u003d\"bg-success\"\u003e\n                    \u003ca role\u003d\"button\"\u003e\n                        \u003ci class\u003d\"glyphicon glyphicon-sort-by-attributes\" /\u003e\u0026nbsp;\u0026nbsp;Clustering Order ASC\n                    \u003c/a\u003e\n                \u003c/li\u003e\n                \u003cli class\u003d\"bg-success\"\u003e\n                    \u003ca role\u003d\"button\"\u003e\n                        \u003ci class\u003d\"glyphicon glyphicon-sort-by-attributes-alt\" /\u003e\u0026nbsp;\u0026nbsp;Clustering Order DESC\n                    \u003c/a\u003e\n                \u003c/li\u003e\n            \u003c/ul\u003e\n        \u003c/li\u003e\n        \u003cli\u003e\n            \u003ca href\u003d\"#\"\u003e\u003c/a\u003e\n        \u003c/li\u003e\n    \u003c/ul\u003e\n\u003c/nav\u003e\n\u003chr/\u003e\n\n\u003cdiv class\u003d\"row\"\u003e\n    \u003cdiv class\u003d\"col-md-2\"/\u003e\n    \u003cdiv class\u003d\"col-md-8 col-offset-md-2\"\u003e\n        \u003cdiv class\u003d\"panel panel-default table-responsive table-bordered\"\u003e\n            \u003ctable class\u003d\"table\"\u003e\n                \n                \u003ccaption\u003e\u003ch4 class\u003d\"text-primary\"\u003e\u003ci class\u003d\"glyphicon glyphicon-th-list\"/\u003e\u0026nbsp;albums\u003c/h4\u003e\u003c/caption\u003e\n                                \u003cthead\u003e\n                    \u003ctr\u003e\n                        \u003cth class\u003d\"col-md-4\"\u003eColumn Type\u003c/th\u003e\n                        \u003cth class\u003d\"col-md-4\"\u003eColumn Name\u003c/th\u003e\n                        \u003cth class\u003d\"col-md-4\"\u003eData Type\u003c/th\u003e\n                    \u003c/tr\u003e\n                \u003c/thead\u003e\n                \u003ctbody\u003e\n                                            \n\n                    \u003ctr class\u003d\"info\"\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003e\n                            \u003ci class\u003d\"glyphicon glyphicon-fullscreen\" title\u003d\"Partition Key\"/\u003e\n                        \u003c/td\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003ealbum\u003c/td\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003etext\u003c/td\u003e\n                    \u003c/tr\u003e\n                                                                    \n                    \u003ctr\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003e\u003c/td\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003eartist\u003c/td\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003etext\u003c/td\u003e\n                    \u003c/tr\u003e\n                                                                    \n                    \u003ctr\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003e\u003c/td\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003ecountry\u003c/td\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003etext\u003c/td\u003e\n                    \u003c/tr\u003e\n                                                                    \n                    \u003ctr\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003e\u003c/td\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003equality\u003c/td\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003etext\u003c/td\u003e\n                    \u003c/tr\u003e\n                                                                    \n                    \u003ctr\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003e\u003c/td\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003estatus\u003c/td\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003etext\u003c/td\u003e\n                    \u003c/tr\u003e\n                                                                    \n                    \u003ctr\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003e\u003c/td\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003eyear\u003c/td\u003e\n                        \u003ctd class\u003d\"col-md-4\"\u003etext\u003c/td\u003e\n                    \u003c/tr\u003e\n                                            \n                \u003c/tbody\u003e\n            \u003c/table\u003e\n            \u003cdiv class\u003d\"panel-footer\"\u003e\n                \u003ca data-toggle\u003d\"collapse\" data-target\u003d\"#f1351630-6d32-11e7-a8eb-996422effb68_asCQL\" class\u003d\"text-primary\"\u003e\n                    \u003cstrong\u003eAs CQL statement\u003c/strong\u003e\n                    \u003cspan class\u003d\"caret\"\u003e\u003c/span\u003e\n                \u003c/a\u003e\n                \u003cbr/\u003e\u003cbr/\u003e\n                \u003cdiv class\u003d\"collapse\" id\u003d\"f1351630-6d32-11e7-a8eb-996422effb68_asCQL\"\u003e\n                    \u003cpre class\u003d\"well\"\u003eCREATE TABLE ks_music.albums (\n    album text,\n    artist text,\n    country text,\n    quality text,\n    status text,\n    year text,\n    PRIMARY KEY (album)\n) WITH read_repair_chance \u003d 0.0\n   AND dclocal_read_repair_chance \u003d 0.1\n   AND gc_grace_seconds \u003d 864000\n   AND bloom_filter_fp_chance \u003d 0.01\n   AND caching \u003d { \u0027keys\u0027 : \u0027ALL\u0027, \u0027rows_per_partition\u0027 : \u0027NONE\u0027 }\n   AND comment \u003d \u0027\u0027\n   AND compaction \u003d { \u0027class\u0027 : \u0027org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy\u0027 }\n   AND compression \u003d { \u0027sstable_compression\u0027 : \u0027org.apache.cassandra.io.compress.LZ4Compressor\u0027 }\n   AND default_time_to_live \u003d 0\n   AND speculative_retry \u003d \u002799.0PERCENTILE\u0027\n   AND min_index_interval \u003d 128\n   AND max_index_interval \u003d 2048;\u003c/pre\u003e\n                \u003c/div\u003e\n            \u003c/div\u003e\n        \u003c/div\u003e\n            \u003c/div\u003e\n    \u003cdiv class\u003d\"col-md-2\"\u003e\u003c/div\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665050_1753964569",
+      "id": "20160113-181412_1134300065",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:05:17 AM",
+      "dateFinished": "Jul 20, 2017 10:05:24 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "10 - Cassandra CQL",
+      "text": "%cassandra\nselect * from ks_music.albums limit 10;",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:05:28 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false,
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\n\n\u003cdiv class\u003d\"container\"\u003e\n\u003cdiv class\u003d\"row text-center\"\u003e\n\u003ch4\u003eNo Result\u003c/h4\u003e\n\u003c/div\u003e\n\u003cbr/\u003e\n    \u003cdiv class\u003d\"row\"\u003e\n    \u003cdiv class\u003d\"col-md-3\"\u003e\u003c/div\u003e\n    \u003cdiv class\u003d\"col-md-6 col-offset-md-3 table-responsive table-bordered\"\u003e\n        \u003ctable class\u003d\"table\"\u003e\n            \u003ccaption\u003e\u003ch5\u003eLast query execution info\u003c/h5\u003e\u003c/caption\u003e\n            \u003cthead\u003e\n                \u003ctr\u003e\n                    \u003cth\u003eInfo\u003c/th\u003e\n                    \u003cth\u003eValue\u003c/th\u003e\n                \u003c/tr\u003e\n            \u003c/thead\u003e\n            \u003ctbody\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eStatement\u003c/td\u003e\n                    \u003ctd\u003eselect * from ks_music.albums limit 10;\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eAchieved Consistency\u003c/td\u003e\n                    \u003ctd\u003eN/A\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eTried Hosts\u003c/td\u003e\n                    \u003ctd\u003ecassandra172.19.0.2:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eQueried Hosts\u003c/td\u003e\n                    \u003ctd\u003ecassandra172.19.0.2:9042\u003c/td\u003e\n                \u003c/tr\u003e\n                \u003ctr\u003e\n                    \u003ctd\u003eSchema In Agreement\u003c/td\u003e\n                    \u003ctd\u003etrue\u003c/td\u003e\n                \u003c/tr\u003e\n            \u003c/tbody\u003e\n        \u003c/table\u003e\n    \u003c/div\u003e\n    \u003c/div\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665051_1753579820",
+      "id": "20160123-172739_1656103366",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:05:28 AM",
+      "dateFinished": "Jul 20, 2017 10:05:28 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "11 - Write Spark DataFrame in Cassandra 1",
+      "text": "df_albums.write\n.format(\"org.apache.spark.sql.cassandra\")\n.option(\"header\",\"false\")\n.mode(\"append\")\n.options(Map( \"table\" -\u003e \"albums\", \"keyspace\" -\u003e \"ks_music\"))\n.save()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:05:31 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665052_1751656075",
+      "id": "20160114-001131_987960956",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:05:31 AM",
+      "dateFinished": "Jul 20, 2017 10:06:15 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "12 - CQL Cassandra query",
+      "text": "%cassandra\nselect * from ks_music.albums limit 10;",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:06:34 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/undefined",
+        "editorHide": false,
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [
+            {
+              "name": "album",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          ],
+          "values": [
+            {
+              "name": "artist",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
+          "groups": [],
+          "scatter": {
+            "xAxis": {
+              "name": "album",
+              "index": 0.0,
+              "aggr": "sum"
+            },
+            "yAxis": {
+              "name": "artist",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          }
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "album\tartist\tcountry\tquality\tstatus\tyear\nQuit My Baby / Be Careful With a Fool\tB.B. King\tUSA\tnormal\tOfficial\t1957\n今でもずっと\t伊藤由奈\tJapan\tnormal\tOfficial\t2009\nThe Impossible Dream EP\tCarter the Unstoppable Sex Machine\tUnited Kingdom\tnormal\tOfficial\t1992\nThe Way You Are\tTears for Fears\tUnited Kingdom\tnormal\tOfficial\t1983\nPrimitive\tAmbulance LTD\tUnited Kingdom\tnormal\tOfficial\t2003\nFàntèxī\t周杰倫\tTaiwan\tnormal\tPseudo-Release\t2001\nDestroying the Masses\tPhobia\tUnknown\tnormal\tOfficial\t-1\nIn the Mouth of the Young\tBullets and Octane\tUSA\tnormal\tOfficial\t2006\nLook Around the Corner\tAlice Russell\tUSA\tnormal\tOfficial\t2012\nView From the Ground\tAmerica\tUSA\tnormal\tOfficial\t1982\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665052_1751656075",
+      "id": "20160123-172148_256698728",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:06:34 AM",
+      "dateFinished": "Jul 20, 2017 10:06:34 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "13 - Write Spark DataFrame In Cassandra 2",
+      "text": "\nval df_nbalbyms_by_year \u003d sqlContext.sql(\"SELECT year,count(*) as nbalbums FROM spark_albums_table group by year\")\n\ndf_nbalbyms_by_year.show\n\ndf_nbalbyms_by_year.write\n.format(\"org.apache.spark.sql.cassandra\")\n.option(\"header\",\"false\")\n.mode(\"overwrite\")\n.options(Map( \"table\" -\u003e \"nbalbums_by_year\", \"keyspace\" -\u003e \"ks_music\"))\n.save()",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:06:43 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\ndf_nbalbyms_by_year: org.apache.spark.sql.DataFrame \u003d [year: string, nbalbums: bigint]\n+----+--------+\n|year|nbalbums|\n+----+--------+\n|1953|      34|\n|1957|     160|\n|1987|    1289|\n|1956|     134|\n|  -1|    5948|\n|1936|      11|\n|2012|    2121|\n| 200|       1|\n|1958|     152|\n|1943|       6|\n|1972|     496|\n|1931|       5|\n|1988|    1328|\n|1938|      11|\n|1926|       9|\n|1911|       1|\n|1918|       6|\n|1932|       2|\n|1977|     599|\n|2014|    1148|\n+----+--------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665052_1751656075",
+      "id": "20160114-000651_1120689629",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:06:43 AM",
+      "dateFinished": "Jul 20, 2017 10:06:49 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "14 - Cassandra CQL query",
+      "text": "%cassandra\nselect * from ks_music.nbalbums_by_year;",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:07:02 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "editorHide": true,
+        "title": true,
+        "graph": {
+          "mode": "multiBarChart",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [
+            {
+              "name": "year",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          ],
+          "values": [
+            {
+              "name": "nbalbums",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
+          "groups": [],
+          "scatter": {
+            "xAxis": {
+              "name": "year",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          }
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {}
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "year\tnbalbums\n1955\t65\n1964\t314\n1970\t448\n200\t1\n1934\t6\n1928\t6\n1956\t134\n1988\t1328\n1979\t733\n2011\t2586\n1974\t514\n1919\t4\n1987\t1289\n1991\t1863\n1982\t1048\n1935\t18\n2006\t6050\n2013\t1619\n1998\t3377\n2012\t2121\n1913\t1\n1950\t34\n1949\t35\n1914\t1\n1930\t8\n1960\t188\n1920\t4\n1918\t6\n1989\t1536\n1916\t1\n1997\t3203\n1927\t5\n1945\t24\n1984\t1018\n1944\t12\n1963\t228\n1958\t152\n2008\t4687\n1978\t736\n21\t1\n1983\t981\n1909\t1\n1980\t814\n1933\t9\n1968\t389\n1967\t377\n1992\t1929\n1926\t9\n1937\t16\n1014\t1\n1969\t394\n-1\t5948\n1929\t8\n10\t1\n1971\t417\n1936\t11\n1981\t854\n1985\t1006\n2001\t4328\n1976\t521\n1923\t4\n1993\t2275\n1912\t1\n1946\t20\n1922\t5\n2015\t191\n1965\t371\n2010\t3099\n2002\t4498\n208\t1\n1959\t188\n1954\t49\n1999\t3788\n1907\t2\n1975\t524\n2003\t4974\n1996\t2948\n1990\t1716\n1962\t189\n1921\t1\n1948\t22\n1947\t22\n2014\t1148\n1995\t2823\n1939\t10\n2004\t5414\n1994\t2478\n1972\t496\n2007\t5335\n1938\t11\n1942\t11\n1973\t527\n1917\t10\n1898\t3\n1951\t35\n1941\t16\n2009\t3762\n1911\t1\n1986\t1087\n1925\t6\n1953\t34\n1952\t33\n1957\t160\n1924\t18\n1943\t6\n1931\t5\n2005\t5819\n1906\t1\n1932\t2\n1966\t337\n1940\t15\n1977\t599\n2000\t4101\n1890\t63\n1961\t163\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665053_1751271327",
+      "id": "20160114-001159_1878746586",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:07:02 AM",
+      "dateFinished": "Jul 20, 2017 10:07:02 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "15 - Spark DataFrame from Cassandra Table",
+      "text": "val df_albums_cassandra \u003d sqlContext\n  .read\n  .format(\"org.apache.spark.sql.cassandra\")\n  .options(Map( \"table\" -\u003e \"albums\", \"keyspace\" -\u003e \"ks_music\" ))\n  .load()\n  \ndf_albums_cassandra.show\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:07:09 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\ndf_albums_cassandra: org.apache.spark.sql.DataFrame \u003d [album: string, artist: string ... 4 more fields]\n+--------------------+--------------------+--------------+-------+--------------+----+\n|               album|              artist|       country|quality|        status|year|\n+--------------------+--------------------+--------------+-------+--------------+----+\n|How Ghosts Affect...|   His Name Is Alive|United Kingdom| normal|     Promotion|1990|\n|Shuggie\u0027s Boogie:...|        Shuggie Otis|       Unknown| normal|      Official|1994|\n|Hospital Music fo...|        Trophy Scars|           USA| normal|      Official|2007|\n|           Ici Paris|          Noir Désir|        France| normal|     Promotion|1992|\n| Darkness Between Us|In Mitra Medusa Inri|       Germany| normal|      Official|2003|\n|       Doppelgaenger|     Markus Guentner|   Netherlands| normal|      Official|2009|\n|    Allt ljus på mig| Bo Kaspers orkester|        Sweden| normal|      Official|1998|\n|      Epic Last Song|Does It Offend Yo...|United Kingdom| normal|      Official|2008|\n|2005-09-06: Amper...|Olli Schulz \u0026 der...|       Germany| normal|       Bootleg|2005|\n|    Kill My Landlord|            The Coup|           USA| normal|      Official|1993|\n|           太陽のSEASON|               安室奈美恵|         Japan| normal|      Official|1995|\n|Adam Svanell pres...|             50hertz|        Sweden| normal|      Official|2006|\n| If...（薬物乱用撲滅キャンぺーン）|               ヴィドール|         Japan| normal|      Official|2003|\n| Source Tags \u0026 Codes|…And You Will Kno...|United Kingdom| normal|      Official|2002|\n|Tenebrae Responso...|      Carlo Gesualdo|United Kingdom| normal|      Official|2007|\n|No Government: Th...|          Anti-Pasti|           USA| normal|      Official|2006|\n|      Everybody Else|    The Bear Quartet|        Sweden| normal|      Official|1995|\n|Yes We Have No Ma...|         Kevin Ayers|United Kingdom| normal|      Official|1976|\n|           Talk Show|         The Go‐Go’s|           USA| normal|      Official|1984|\n|        Dusk to Dawn|       Sophie Barker|       Unknown| normal|Pseudo-Release|  -1|\n+--------------------+--------------------+--------------+-------+--------------+----+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665053_1751271327",
+      "id": "20160113-182535_1195558506",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:07:09 AM",
+      "dateFinished": "Jul 20, 2017 10:07:11 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "16 - SparkSQL table from Cassandra table",
+      "text": "%sql\nCREATE TEMPORARY TABLE table_albums\nUSING org.apache.spark.sql.cassandra\nOPTIONS ( cluster \"Test Cluster\", keyspace \"ks_music\", table \"albums\", pushdown \"true\")",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:07:23 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": false,
+        "title": true,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [
+            {
+              "name": "null",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          ],
+          "values": [],
+          "groups": [],
+          "scatter": {
+            "xAxis": {
+              "name": "null",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          }
+        },
+        "enabled": true,
+        "results": {
+          "0": {
+            "graph": {
+              "mode": "table",
+              "height": 300.0,
+              "optionOpen": false
+            },
+            "helium": {}
+          }
+        },
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": ""
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665053_1751271327",
+      "id": "20160114-002507_1756327366",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:07:15 AM",
+      "dateFinished": "Jul 20, 2017 10:07:16 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "title": "17 - SparkSQL query on Cassandra Data",
+      "text": "%sql\nselect country, count(*) as count from table_albums group by country having count\u003e${albumCountThreshold\u003d1000} order by count",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:07:51 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sql",
+        "editorHide": false,
+        "title": true,
+        "graph": {
+          "mode": "multiBarChart",
+          "height": 196.0,
+          "optionOpen": false,
+          "keys": [
+            {
+              "name": "country",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          ],
+          "values": [
+            {
+              "name": "nb",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
+          "groups": [],
+          "scatter": {
+            "xAxis": {
+              "name": "country",
+              "index": 0.0,
+              "aggr": "sum"
+            },
+            "yAxis": {
+              "name": "nb",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          }
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "sql",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {
+          "albumCountThreshold": "1500"
+        },
+        "forms": {
+          "albumCountThreshold": {
+            "name": "albumCountThreshold",
+            "defaultValue": "1000",
+            "hidden": false
+          }
+        }
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TABLE",
+            "data": "country\tcount\nCanada\t1588\nFinland\t1820\nSweden\t2097\nFrance\t3011\nJapan\t5505\nGermany\t8522\nUnknown\t12829\nUnited Kingdom\t17974\nUSA\t31713\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665054_1752425573",
+      "id": "20160114-181331_1246292720",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:07:51 AM",
+      "dateFinished": "Jul 20, 2017 10:07:58 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\r\nsqlContext.cacheTable(\"table_albums\")\r\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:08:19 AM",
+      "config": {
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1497002665054_1752425573",
+      "id": "20160114-093455_823181330",
+      "dateCreated": "Jun 9, 2017 10:04:25 AM",
+      "dateStarted": "Jul 20, 2017 10:08:19 AM",
+      "dateFinished": "Jul 20, 2017 10:08:19 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nsqlContext.uncacheTable(\"table_albums\")\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:08:20 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1497453908600_-1713917224",
+      "id": "20170614-152508_347787329",
+      "dateCreated": "Jun 14, 2017 3:25:08 PM",
+      "dateStarted": "Jul 20, 2017 10:08:20 AM",
+      "dateFinished": "Jul 20, 2017 10:08:21 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\nsqlContext.setConf(\"spark.sql.shuffle.partitions\", \"3\")\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 20, 2017 10:08:09 AM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "paragraph_1497453993859_593360633",
+      "id": "20170614-152633_434879090",
+      "dateCreated": "Jun 14, 2017 3:26:33 PM",
+      "dateStarted": "Jul 20, 2017 10:08:09 AM",
+      "dateFinished": "Jul 20, 2017 10:08:09 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%spark\n",
+      "user": "anonymous",
+      "dateUpdated": "Jul 19, 2017 2:32:11 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1497454179808_1596460668",
+      "id": "20170614-152939_1021468885",
+      "dateCreated": "Jun 14, 2017 3:29:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Spark Cassandra",
+  "id": "2CHUR4D21",
+  "angularObjects": {
+    "2CR5ERDE3:shared_process": [],
+    "2CPHDUCAD:shared_process": [],
+    "2CQXW6QV2:shared_process": [],
+    "2CN2E7ATU:shared_process": [],
+    "2CPBE5412:shared_process": [],
+    "2CQKU7S3U:shared_process": [],
+    "2CPZFCUMJ:shared_process": [],
+    "2CN9SCVEQ:shared_process": [],
+    "2CNKHH414:shared_process": [],
+    "2CP21U9QE:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
